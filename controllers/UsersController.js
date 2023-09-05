@@ -13,6 +13,7 @@ exports.createUser = async (req, res) => {
 		entryDate,
 		email,
 		password,
+		birthday,
 	} = req.body;
 
 	if (category === 0 || area === 0) {
@@ -42,7 +43,7 @@ exports.createUser = async (req, res) => {
 		const newPass = await bcrypt.hash(password, salt);
 
 		await sequelize.query(
-			`EXEC sp_user_info null, '${email}', '${newPass}', ${name}, ${lastname}, ${motherLastname}, ${category}, ${area}, '${position}', 1, '${entryDate}', ${req.usuario.id}`,
+			`EXEC sp_user_info null, '${email}', '${newPass}', ${name}, ${lastname}, ${motherLastname}, ${category}, ${area}, '${position}', 1, '${entryDate}', ${req.usuario.id}, '${birthday}'`,
 		);
 		sequelize.close();
 
@@ -64,6 +65,7 @@ exports.editUser = async (req, res) => {
 		area,
 		position,
 		entryDate,
+		birthday,
 	} = req.body;
 
 	if (
@@ -78,7 +80,7 @@ exports.editUser = async (req, res) => {
 		const sequelize = fnSequelize();
 
 		await sequelize.query(
-			`EXEC sp_user_info ${id}, null, null, '${name}', '${lastname}', '${motherLastname}', ${category}, ${area}, '${position}', 1, '${entryDate}', ${req.usuario.id}`,
+			`EXEC sp_user_info ${id}, null, null, '${name}', '${lastname}', '${motherLastname}', ${category}, ${area}, '${position}', 1, '${entryDate}', ${req.usuario.id}, '${birthday}'`,
 		);
 		sequelize.close();
 
@@ -116,6 +118,21 @@ exports.getUser = async (req, res) => {
 		const users = await sequelize.query(
 			`EXEC sp_lst_users ${id === undefined ? "null" : id}`,
 		);
+		sequelize.close();
+
+		res.json(users);
+	} catch (error) {
+		console.log(error);
+		const errorLog = `${error.original}`;
+		res.json({ error: errorLog });
+	}
+};
+
+exports.getBirthdays = async (req, res) => {
+	try {
+		const sequelize = fnSequelize();
+
+		const users = await sequelize.query("EXEC sp_lst_birthdays");
 		sequelize.close();
 
 		res.json(users);

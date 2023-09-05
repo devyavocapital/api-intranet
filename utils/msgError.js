@@ -22,6 +22,15 @@ const msgError = (type) => {
 		case "vacationsRequestUpdated":
 			msg = { msg: "Vacaciones solicitadas actualizadas correctamente." };
 			return msg;
+		case "vacationsRemoved":
+			msg = { msg: "Vacaciones No Aprobadas." };
+			return msg;
+		case "vacationsRequest":
+			msg = { msg: "Vacaciones solicitadas." };
+			return msg;
+		case "vacationsApprove":
+			msg = { msg: "Vacaciones aprovadas." };
+			return msg;
 		case "categoryOk":
 			msg = { msg: "Categoria creada correctamente." };
 			return msg;
@@ -40,16 +49,16 @@ const msgError = (type) => {
 		case "areaDeleted":
 			msg = { msg: "Área eliminada correctamente." };
 			return msg;
-		case "vacationsRequest":
-			msg = { msg: "Vacaciones solicitadas." };
-			return msg;
-		case "vacationsApprove":
-			msg = { msg: "Vacaciones aprovadas." };
-			return msg;
 		case "releaseOk":
 			msg = { msg: "Comunicado creado correctamente." };
 			return msg;
 		case "releaseUpdate":
+			msg = { msg: "Comunicado actualizado correctamente." };
+			return msg;
+		case "procedureOk":
+			msg = { msg: "Procedimiento creado correctamente." };
+			return msg;
+		case "procedureUpdate":
 			msg = { msg: "Comunicado actualizado correctamente." };
 			return msg;
 

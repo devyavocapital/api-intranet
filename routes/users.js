@@ -8,4 +8,5 @@ router.delete("/", auth, usersController.deleteUser);
 router.post("/", auth, usersController.createUser);
 router.put("/", auth, usersController.editUser);
 
+router.get("/birthdays", auth, usersController.getBirthdays);
 module.exports = router;

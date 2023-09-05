@@ -13,5 +13,6 @@ router.put("/list", auth, VacationsController.requestVacationsUpdate);
 router.get("/request", auth, VacationsController.toApproveVacations);
 router.post("/request", auth, VacationsController.requestVacations);
 router.put("/request", auth, VacationsController.approveVacations);
+router.delete("/request", auth, VacationsController.deleteRequestVacations);
 
 module.exports = router;

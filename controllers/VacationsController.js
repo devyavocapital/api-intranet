@@ -140,6 +140,26 @@ exports.approveVacations = async (req, res) => {
 	}
 };
 
+// NO aprobar vacaciones
+exports.deleteRequestVacations = async (req, res) => {
+	const { idRequest } = req.body;
+
+	try {
+		const sequelize = fnSequelize();
+
+		await sequelize.query(
+			`EXEC sp_user_vacation 0, null, 0, null, null, ${idRequest}, 0`,
+		);
+		sequelize.close();
+
+		res.json(msgError("vacationsRemoved"));
+	} catch (error) {
+		console.log(error);
+		const errorLog = `${error.original}`;
+		res.json({ error: errorLog });
+	}
+};
+
 // Obtener vacaciones por listado, por cada usuario - "historico"
 exports.getVacationsList = async (req, res) => {
 	const { id } = req.query;
@@ -149,7 +169,6 @@ exports.getVacationsList = async (req, res) => {
 
 		const vacations = await sequelize.query(`EXEC sp_user_lst_vacation ${id}`);
 		sequelize.close();
-
 		res.json(vacations);
 	} catch (error) {
 		console.log(error);
